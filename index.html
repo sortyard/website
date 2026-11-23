@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sortyard: agent work, in order</title>
+<meta name="description" content="Sortyard is a source-available delivery harness for AI agent work: conductor, control plane and task manager, deployed with one Helm chart. Built in public.">
+<meta property="og:title" content="Sortyard: agent work, in order">
+<meta property="og:description" content="A delivery harness for AI agent work, rebuilt from first principles as a package anyone can run on their own cluster. Built in public.">
+<meta property="og:url" content="https://sortyard.ai">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23141a17'/%3E%3Cpath d='M7 10h18M7 16h12M7 22h6' stroke='%23c8f169' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f2ec;--fg:#141a17;--muted:#5b625e;--line:#d9d5ca;--accent:#3d6b12;--chip:#e8e4d8;--card:#fbfaf6}
+@media (prefers-color-scheme:dark){:root{--bg:#121614;--fg:#ecefe9;--muted:#9aa39d;--line:#2a312d;--accent:#c8f169;--chip:#1d2320;--card:#171c19}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 "IBM Plex Sans",system-ui,sans-serif}
+a{color:inherit}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+header{padding:28px 0;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.mark{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.01em;text-decoration:none}
+.mark svg{width:26px;height:26px}
+.nav a{font-size:15px;color:var(--muted);text-decoration:none}
+.nav a:hover{color:var(--fg)}
+.hero{padding:56px 0 40px}
+.eyebrow{font:500 13px/1 "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
+h1{font-size:clamp(36px,7vw,58px);line-height:1.05;letter-spacing:-.03em;margin:16px 0 20px;font-weight:600}
+.lede{font-size:19px;color:var(--muted);max-width:600px;margin:0}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:8px;font-weight:500;font-size:15px;text-decoration:none;border:1px solid var(--line)}
+.btn.primary{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn:hover{opacity:.88}
+.yard{margin:8px 0 0;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font:13px/1.9 "IBM Plex Mono",monospace;color:var(--muted);overflow:hidden}
+.yard span{display:inline-block;padding:0 8px;margin:2px 4px 2px 0;border-radius:4px;background:var(--chip)}
+.yard .on{color:var(--bg);background:var(--accent)}
+section{padding:44px 0;border-bottom:1px solid var(--line)}
+h2{font-size:14px;font-family:"IBM Plex Mono",monospace;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 20px}
+p{margin:0 0 14px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:620px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px}
+.card b{display:block;margin-bottom:6px;font-weight:600}
+.card p{margin:0;color:var(--muted);font-size:15.5px}
+ol.status{list-style:none;padding:0;margin:0;font-size:16px}
+ol.status li{display:flex;gap:14px;padding:10px 0;border-top:1px dashed var(--line)}
+ol.status li:first-child{border-top:0}
+.dot{flex:none;width:10px;height:10px;border-radius:50%;margin-top:9px;border:2px solid var(--accent)}
+.dot.done{background:var(--accent)}
+code{font-family:"IBM Plex Mono",monospace;font-size:14px;background:var(--chip);padding:2px 6px;border-radius:4px;word-break:break-word}
+footer{padding:32px 0 48px;color:var(--muted);font-size:14px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="mark" href="/" aria-label="Sortyard home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="6" fill="currentColor"/><path d="M7 10h18M7 16h12M7 22h6" stroke="var(--bg)" stroke-width="3" stroke-linecap="round"/></svg>
+      Sortyard
+    </a>
+    <nav class="nav"><a href="https://github.com/sortyard/sortyard">GitHub →</a></nav>
+  </header>
+
+  <div class="hero">
+    <div class="eyebrow">Built in public</div>
+    <h1>Agent work, in order.</h1>
+    <p class="lede">Sortyard is a delivery harness for software built by AI agents: the conductor, the control plane and the task manager, in one package you run on your own cluster. It is the harness we use, rebuilt from first principles.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/sortyard/sortyard">Read the charter and design spec</a>
+      <a class="btn" href="https://github.com/sortyard/sortyard#quickstart--a-running-empty-sortyard-on-a-local-cluster">Run it locally</a>
+    </div>
+  </div>
+
+  <div class="yard" aria-hidden="true">
+    <span>todo</span><span>claimed</span><span>building</span><span>reviewing</span><span class="on">merging</span><span>deployed</span><span>verified</span><span>done</span>
+  </div>
+
+  <section>
+    <h2>Why it exists</h2>
+    <p>It started as an audit. We checked the system we use to build software with agents against its own records. The harness turned out to be spread across about six repositories, with two schedulers making decisions, and many of its operating rules lived in documents and in an agent's memory instead of in the system itself.</p>
+    <p>Sortyard is the redesign: the same control and flexibility, packaged so anyone can install it. We run it ourselves first and replace our current harness by cutover, starting with Sortyard's own backlog.</p>
+  </section>
+
+  <section>
+    <h2>Principles</h2>
+    <div class="grid">
+      <div class="card"><b>No unbound agents</b><p>Work runs only through a verified binding: workflow, context, skills, model, place, credentials and a bounded resource envelope.</p></div>
+      <div class="card"><b>One source of truth</b><p>Each domain object has one home. Everything else is a labelled projection of it.</p></div>
+      <div class="card"><b>An explicit state machine</b><p>Item states are data. The conductor's next step can be derived from them, not guessed.</p></div>
+      <div class="card"><b>Observed state only</b><p>Work advances on what the system observes, never on an agent's report of what it did.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Where it stands</h2>
+    <ol class="status">
+      <li><span class="dot done"></span><span>Charter and full design spec published before any product code</span></li>
+      <li><span class="dot done"></span><span>Phase 1: API service, Postgres domain schema and event ledger, one Helm chart, and a local replica on kind</span></li>
+      <li><span class="dot done"></span><span>Kernel work under way: a durable workflow engine, item states as one table, and a ledger that records every transition</span></li>
+      <li><span class="dot"></span><span>Next: run one delivery lane end to end, then cut over our own harness</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Try it</h2>
+    <p>You need Docker, kind, kubectl and Helm 3. From a clone of the repository:</p>
+    <p><code>./replica/replica.sh up</code></p>
+    <p>This brings up an empty Sortyard on a local cluster and smoke-tests it. <code>./replica/replica.sh down</code> removes it.</p>
+  </section>
+
+  <footer>
+    <span>Source-available under FSL-1.1-ALv2. Each version becomes Apache-2.0 two years after release.</span>
+    <span>A <a href="https://noncelogic.com">NonceLogic</a> project</span>
+  </footer>
+</div>
+</body>
+</html>
